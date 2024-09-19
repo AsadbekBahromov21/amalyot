@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSingInRequestMutation } from "../../../redux/api/authApi";
 import { useDispatch } from "react-redux";
 import { sigIn } from "../../../redux/slices/authSlices";
+import { useSearchParams } from "react-router-dom";
 
 const { Title, Text } = Typography;
 const Signin = () => {
   const [singInRequest, { data, isSuccess }] = useSingInRequestMutation();
   const dispatch = useDispatch();
-
+  const [searchParams] = useSearchParams();
   const navigete = useNavigate();
   const onFinish = (values) => {
     singInRequest(values);
@@ -17,7 +18,9 @@ const Signin = () => {
   useEffect(() => {
     if (isSuccess) {
       dispatch(sigIn(data?.payload.accessToken));
-      navigete(`/`);
+      console.log(data?.payload.accessToken);
+
+      navigete(`${searchParams.get("callback-url") ?? "/"}`);
     }
   }, [isSuccess]);
   const onFinishFailed = (errorInfo) => {

@@ -1,7 +1,14 @@
 import React from "react";
+import Products from "../../components/products/Products";
+import { useGetCarsByQueryQuery } from "../../redux/api/carsApi";
 
 const Home = () => {
-  return <div>Home</div>;
+  const { data, isFetching } = useGetCarsByQueryQuery();
+  return (
+    <div className="container mx-auto">
+      {isFetching ? <p>Loading...</p> : <Products data={data.payload} />}
+    </div>
+  );
 };
 
 export default Home;

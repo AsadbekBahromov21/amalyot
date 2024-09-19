@@ -7,7 +7,7 @@ const baseQuery = async (args, api, extraOptions) => {
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
-        headers.set("Authhorization", `Bearar ${token}`);
+        headers.set("Authorization", `Bearar ${token}`);
       }
       return headers;
     },
